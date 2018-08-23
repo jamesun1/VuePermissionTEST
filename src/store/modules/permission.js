@@ -1,4 +1,5 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
+import { arrangeApplyMenu } from '@/utils/menumap'
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -31,6 +32,23 @@ function filterAsyncRouter(asyncRouterMap, roles) {
   return accessedRouters
 }
 
+var router = [{
+  "childMenus": [
+    {
+      "menuinstanceicon": "icon",
+      "menuinstanceid": "d7259f04-b076-454b-b21d-a5f701f766c0",
+      "menuinstancename": "图标",
+      "menuinstanceorderno": 1,
+      "menuinstanceparent": "de5666fd-77ca-482e-a3d7-1074f2033398",
+      "menuinstancescript": "svg-icons/index",
+      "menuinstanceurl": "/svg-icons/index"
+    }
+  ],
+  "menuinstanceid": "de5666fd-77ca-482e-a3d7-1074f2033398",
+  "menuinstancename": "图标",
+  "menuinstanceorderno": 1
+}]
+
 const permission = {
   state: {
     routers: constantRouterMap,
@@ -45,13 +63,15 @@ const permission = {
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        const { roles } = data
-        let accessedRouters
-        if (roles.indexOf('admin') >= 0) {
-          accessedRouters = asyncRouterMap
-        } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        }
+        debugger;
+        // const { roles } = data
+        // let accessedRouters
+        // if (roles.indexOf('admin') >= 0) {
+        //   accessedRouters = asyncRouterMap
+        // } else {
+        //   accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        // }
+        let accessedRouters = arrangeApplyMenu(router);
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })

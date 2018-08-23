@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+// import { getList } from '@/api/table'
 import { parseTime } from "@/utils";
 import { Message } from 'element-ui'
 
