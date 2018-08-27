@@ -7,7 +7,7 @@ function obj2menuData(obj) {
     if (obj) {
         menuData = {
             path: obj.menuinstanceurl ? obj.menuinstanceurl.substring(obj.menuinstanceurl.lastIndexOf('/') + 1) : '',
-            component: obj.menuinstancescript ? _import(obj.menuinstancescript) : Layout,
+            component: obj.menuinstancesrc ? _import(obj.menuinstancesrc) : Layout,
             name: obj.menuinstanceid,
             meta: {
                 title: obj.menuinstancename,
@@ -20,19 +20,19 @@ function obj2menuData(obj) {
         // }
         if (menuData.path === '') {
             // debugger
-            if (obj.childMenus && obj.childMenus.length > 0) {
-                let path = obj.childMenus[0].menuinstanceurl.substring(0, obj.childMenus[0].menuinstanceurl.lastIndexOf('/'))
+            if (obj.zishuju && obj.zishuju.length > 0) {
+                let path = obj.zishuju[0].menuinstanceurl.substring(0, obj.zishuju[0].menuinstanceurl.lastIndexOf('/'))
                 menuData.path = path
             }
         }
-        if (obj.childMenus && obj.childMenus.length > 0) {
-            if (obj.childMenus.length === 1) {
-                menuData.redirect = obj.childMenus[0].path
+        if (obj.zishuju && obj.zishuju.length > 0) {
+            if (obj.zishuju.length === 1) {
+                menuData.redirect = obj.zishuju[0].path
             } else {
                 menuData.redirect = 'noredirect'
             }
-            if (obj.childMenus.length > 0) {
-                menuData.children = arrangeApplyMenu(obj.childMenus)
+            if (obj.zishuju.length > 0) {
+                menuData.children = arrangeApplyMenu(obj.zishuju)
             }
         }
 
@@ -41,7 +41,6 @@ function obj2menuData(obj) {
 }
 
 export function arrangeApplyMenu(menuData) {
-    debugger;
     let menumap = []
     if (menuData && menuData.length > 0) {
         menuData.forEach(element => {
@@ -53,26 +52,4 @@ export function arrangeApplyMenu(menuData) {
     console.log('**************************')
     console.log(menumap)
     return menumap
-
-    // console.log('111111111111')
-    // let menuMap = new Array()
-    // menuMap.push({
-    //   path: '/personalCenter',
-    //   component: Layout,
-    //   redirect: 'noredirect',
-    //   name: 'personalCenter',
-    //   menuKey: 'personalCenter',
-    //   meta: {
-    //     title: '个人中心',
-    //     icon: 'user_parent'
-    //   },
-    //   hidden: true,
-    //   children: [
-    //     { path: 'personalData', component: _import('personalCenter/personalData'), name: 'personalData', meta: { title: '个人资料', icon: 'user_zl' }},
-    //     { path: 'headSetting', component: _import('image-editor/image-editor'), name: 'headSetting', meta: { title: '头像设置', icon: 'user_head' }},
-    //     { path: 'personalInfoSetting', component: _import('personalCenter/personalInfoSetting'), name: 'personalInfoSetting', meta: { title: '消息设置', icon:'user_xxsz' }}
-    //   ]
-    // })
-    // console.log('222222222222')
-    // console.log(menuMap)
 }
